@@ -7,12 +7,12 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('ico')
 @Controller('ico')
 export class ICOController {
-    constructor(private icoService: ICOService) {}
+    constructor(private icoService: ICOService) { }
 
     @Post('whitelist')
     async whitelist(@Body() whitelist: Whitelist): Promise<Response> {
         return ResponseUtils.getSuccessResponse(
-            await this.icoService.whitelist(whitelist)
-          );        
+            await this.icoService.whitelist(whitelist),
+        );
     }
 }
