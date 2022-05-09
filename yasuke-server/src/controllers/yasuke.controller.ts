@@ -192,6 +192,24 @@ export class YasukeController {
     );
   }
 
+  @Get('list-tokens-with-auctions')
+  async listTokensWithAuction(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+    @Headers('chain') chain: string,
+  ): Promise<Response> {
+    return ResponseUtils.getSuccessResponse(
+      await this.tokenService.listTokensWithAuction(
+        {
+          page,
+          limit,
+          route: '/v3/assets',
+        },
+        chain,
+      ),
+    );
+  }
+
   @Get('list-tokens/by-owner/:owner')
   async listTokensByOwner(
     @Query('page') page: number,

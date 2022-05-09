@@ -81,6 +81,20 @@ export class TokenService {
     options: IPaginationOptions,
     chain: string,
   ): Promise<Pagination<TokenInfo>> {
+
+    const qb = await this.tokenInfoRepository
+      .createQueryBuilder('tokenInfo')
+      .where('chain = :chain', { chain: chain })
+      .leftJoinAndSelect('tokenInfo.media', 'media')
+      .orderBy('tokenInfo.dateIssued', 'DESC');
+
+    return paginate<TokenInfo>(qb, options);
+  }
+
+  async listTokensWithAuction(
+    options: IPaginationOptions,
+    chain: string,
+  ): Promise<Pagination<TokenInfo>> {
     const now = new Date();
 
     const qb = await this.tokenInfoRepository
