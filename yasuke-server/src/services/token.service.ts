@@ -6,10 +6,16 @@ import {
   paginate,
   Pagination,
 } from 'nestjs-typeorm-paginate';
-import { IssueToken, Media, TokenInfo } from 'src/models/entities.model';
+import {
+  IssueToken,
+  Media,
+  TokenInfo,
+  AuctionInfo,
+} from 'src/models/entities.model';
 import { Repository } from 'typeorm';
 import { ImageService } from './image.service';
 import { YasukeService } from './yasuke.service';
+import { AuctionService } from './auction.service';
 
 @Injectable()
 export class TokenService {
@@ -18,6 +24,7 @@ export class TokenService {
   constructor(
     private imageService: ImageService,
     private yasukeService: YasukeService,
+    private auctionService: AuctionService,
   ) { }
 
   @InjectRepository(TokenInfo)
@@ -29,7 +36,10 @@ export class TokenService {
   async getTokenInfo(tokenId: number, chain: string): Promise<TokenInfo> {
     return new Promise(async (resolve, reject) => {
       try {
-        const blockchainToken = await this.yasukeService.getTokenInfo(tokenId, chain);
+        const blockchainToken = await this.yasukeService.getTokenInfo(
+          tokenId,
+          chain,
+        );
 
         const dbToken = await this.tokenInfoRepository
           .createQueryBuilder('tokenInfo')
@@ -68,20 +78,51 @@ export class TokenService {
   }
 
   async listTokens(
-    options: IPaginationOptions, chain: string
+    options: IPaginationOptions,
+    chain: string,
   ): Promise<Pagination<TokenInfo>> {
-    const qb = this.tokenInfoRepository
+
+    const qb = await this.tokenInfoRepository
       .createQueryBuilder('tokenInfo')
-      .where("chain = :chain", { chain: chain })
+      .where('chain = :chain', { chain: chain })
       .leftJoinAndSelect('tokenInfo.media', 'media')
       .orderBy('tokenInfo.dateIssued', 'DESC');
+
+    return paginate<TokenInfo>(qb, options);
+  }
+
+  async listTokensWithAuction(
+    options: IPaginationOptions,
+    chain: string,
+  ): Promise<Pagination<TokenInfo>> {
+    const now = new Date();
+
+    const qb = await this.tokenInfoRepository
+      .createQueryBuilder('tokenInfo')
+      .where('chain = :chain', { chain: chain })
+      .where('hasActiveAuction = :ha', { ha: true })
+      .where('isInAuction = :ia', { ia: true })
+      .where('isApproved = :iap', { iap: true })
+      .leftJoinAndSelect('tokenInfo.media', 'media')
+      .leftJoinAndMapOne(
+        'tokenInfo.auctions',
+        AuctionInfo,
+        'auctions',
+        'auctions.auctionId = tokenInfo.lastAuctionId and auctions.endDate > :now ',
+        { now: now },
+      )
+      .orderBy('tokenInfo.dateIssued', 'DESC');
+
     return paginate<TokenInfo>(qb, options);
   }
 
   async changeTokenOwnership(tokenId: number, chain: string): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       try {
-        const blockToken = await this.yasukeService.getTokenInfo(tokenId, chain);
+        const blockToken = await this.yasukeService.getTokenInfo(
+          tokenId,
+          chain,
+        );
         const dbToken = await this.tokenInfoRepository
           .createQueryBuilder('tokenInfo')
           .andWhere('chain = :chain', { chain: chain })
@@ -102,18 +143,22 @@ export class TokenService {
   async listTokensByOwner(
     options: IPaginationOptions,
     owner: string,
-    chain: string
+    chain: string,
   ): Promise<Pagination<TokenInfo>> {
     const qb = this.tokenInfoRepository
       .createQueryBuilder('tokenInfo')
       .leftJoinAndSelect('tokenInfo.media', 'media')
       .where('LOWER(owner) = :owner', { owner: owner.toLowerCase() })
-      .andWhere("chain = :chain", { chain: chain })
+      .andWhere('chain = :chain', { chain: chain })
       .orderBy('tokenInfo.dateIssued', 'DESC');
     return paginate<TokenInfo>(qb, options);
   }
 
-  async setPrice(tokenId: number, price: string, chain: string): Promise<TokenInfo> {
+  async setPrice(
+    tokenId: number,
+    price: string,
+    chain: string,
+  ): Promise<TokenInfo> {
     return new Promise(async (resolve, reject) => {
       try {
         const dbToken = await this.tokenInfoRepository
@@ -189,7 +234,10 @@ export class TokenService {
           reject('tokenId already exists');
         }
 
-        dbToken = await this.yasukeService.getTokenInfo(issueToken.tokenId, chain);
+        dbToken = await this.yasukeService.getTokenInfo(
+          issueToken.tokenId,
+          chain,
+        );
         this.logger.debug('Token From Blockchain');
         this.logger.debug(dbToken);
         dbToken.dateIssued = issueToken.dateIssued;
@@ -199,7 +247,7 @@ export class TokenService {
         dbToken.isInAuction = false;
         dbToken.isInSale = false;
         dbToken.isApproved = false;
-        dbToken.price = "0";
+        dbToken.price = '0';
 
         dbToken = await this.tokenInfoRepository.save(dbToken);
 

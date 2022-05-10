@@ -9,37 +9,38 @@ export class ICOService {
     private readonly logger = new Logger(ICOService.name);
 
     @InjectRepository(Whitelist)
-    whitelistRepository: Repository<Whitelist>
+    whitelistRepository: Repository<Whitelist>;
 
-    constructor() {
-
-    }
+    constructor() { }
 
     async whitelist(whitelist: Whitelist): Promise<Whitelist> {
         return new Promise(async (resolve, reject) => {
             try {
-                let dbWhitelist = await this.whitelistRepository.createQueryBuilder("whitelist")
-                    .where("email = :email", { email: whitelist.email })
+                let dbWhitelist = await this.whitelistRepository
+                    .createQueryBuilder('whitelist')
+                    .where('email = :email', { email: whitelist.email })
                     .getOne();
 
                 if (dbWhitelist !== undefined) {
-                    reject("Email Address already exists");
+                    reject('Email Address already exists');
                 }
 
-                dbWhitelist = await this.whitelistRepository.createQueryBuilder("whitelist")
-                    .where("walletAddress = :wa", { wa: whitelist.walletAddress })
+                dbWhitelist = await this.whitelistRepository
+                    .createQueryBuilder('whitelist')
+                    .where('walletAddress = :wa', { wa: whitelist.walletAddress })
                     .getOne();
 
                 if (dbWhitelist !== undefined) {
-                    reject("Wallet Address already exists");
+                    reject('Wallet Address already exists');
                 }
 
-                dbWhitelist = await this.whitelistRepository.createQueryBuilder("whitelist")
-                    .where("linkedInURL = :lu", { lu: whitelist.linkedInURL })
+                dbWhitelist = await this.whitelistRepository
+                    .createQueryBuilder('whitelist')
+                    .where('linkedInURL = :lu', { lu: whitelist.linkedInURL })
                     .getOne();
 
                 if (dbWhitelist !== undefined) {
-                    reject("Linked In URL already exists");
+                    reject('Linked In URL already exists');
                 }
 
                 dbWhitelist = await this.whitelistRepository.save(whitelist);
@@ -49,6 +50,5 @@ export class ICOService {
                 reject(error);
             }
         });
-
     }
 }

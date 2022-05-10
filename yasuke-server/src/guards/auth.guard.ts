@@ -1,5 +1,10 @@
 import { AES, enc } from 'crypto-js';
-import { CanActivate, ExecutionContext, Injectable, Logger } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 
@@ -9,15 +14,17 @@ export class AuthGuard implements CanActivate {
 
   private readonly logger = new Logger(AuthGuard.name);
 
-  canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
     const roles = this.reflector.get<string[]>('roles', context.getHandler());
-    let  authHeader = context.switchToHttp().getRequest().headers['apiKey'];
-    if(authHeader === undefined) {
+    let authHeader = context.switchToHttp().getRequest().headers['apiKey'];
+    if (authHeader === undefined) {
       authHeader = context.switchToHttp().getRequest().headers['apikey'];
     }
-    if(authHeader === undefined) {
+    if (authHeader === undefined) {
       authHeader = context.switchToHttp().getRequest().headers['api-key'];
-    }    
+    }
     if (!roles) {
       return true;
     } else {
@@ -26,7 +33,7 @@ export class AuthGuard implements CanActivate {
   }
 
   matchRoles(roles: string[], handler: string, authHeader: string): boolean {
-    let decrypted = "";
+    let decrypted = '';
     this.logger.log(`authHeader: ${authHeader}`);
     this.logger.log(`roles: ${roles}`);
     if (authHeader !== undefined) {
