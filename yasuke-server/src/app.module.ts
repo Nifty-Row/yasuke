@@ -1,3 +1,4 @@
+import { Likes } from 'src/models/entities.model';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
@@ -26,6 +27,7 @@ import { Buyer } from './models/buyer.model';
       Media,
       Whitelist,
       Buyer,
+      Likes,
     ]),
   ],
   controllers: [YasukeController, ICOController],

@@ -293,4 +293,14 @@ export class YasukeController {
       await this.yasukeService.getAccountBalance(address),
     );
   }
+
+  @Post('tokens/:tokenId/like')
+  async toggleLike(
+    @Param('tokenId') tokenId: number,
+    @Body('userAddress') userAddress: string,
+  ): Promise<Response> {
+    return ResponseUtils.getSuccessResponse(
+      await this.tokenService.toggleLike(tokenId, userAddress),
+    );
+  }
 }
