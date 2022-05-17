@@ -221,3 +221,16 @@ export class StartAuction {
   @IsNotEmpty()
   endDate: string;
 }
+
+@Entity('likes')
+export class Likes {
+  @PrimaryGeneratedColumn()
+  id?: number;
+
+  @ApiProperty()
+  @Column({ width: 20, type: 'bigint' })
+  tokenId: number;
+
+  @Column()
+  userAddress: string;
+}

@@ -11,6 +11,7 @@ import {
   Media,
   TokenInfo,
   AuctionInfo,
+  Likes,
 } from 'src/models/entities.model';
 import { Repository } from 'typeorm';
 import { ImageService } from './image.service';
@@ -32,6 +33,8 @@ export class TokenService {
 
   @InjectRepository(Media)
   mediaRepository: Repository<Media>;
+
+  @InjectRepository(Likes) likesRepository: Repository<Likes>;
 
   async getTokenInfo(tokenId: number, chain: string): Promise<TokenInfo> {
     return new Promise(async (resolve, reject) => {
@@ -81,7 +84,6 @@ export class TokenService {
     options: IPaginationOptions,
     chain: string,
   ): Promise<Pagination<TokenInfo>> {
-
     const qb = await this.tokenInfoRepository
       .createQueryBuilder('tokenInfo')
       .where('chain = :chain', { chain: chain })
@@ -110,6 +112,12 @@ export class TokenService {
         'auctions',
         'auctions.auctionId = tokenInfo.lastAuctionId and auctions.endDate > :now ',
         { now: now },
+      )
+      .leftJoinAndMapOne(
+        'tokenInfo.likes',
+        Likes,
+        'likes',
+        'likes.tokenId = tokenInfo.tokenId',
       )
       .orderBy('tokenInfo.dateIssued', 'DESC');
 
@@ -292,6 +300,44 @@ export class TokenService {
         } else {
           reject('Keys and Medias not the same length');
         }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async toggleLike(tokenId: number, userAddress: string): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (tokenId === undefined) {
+          reject('tokenId is required');
+        }
+
+        if (userAddress === undefined) {
+          reject('userAddress is required');
+        }
+
+        const tokenLiked = await this.likesRepository
+          .createQueryBuilder('likes')
+          .where('tokenId = :tid', { tid: tokenId })
+          .andWhere('userAddress = :ua', { ua: userAddress })
+          .getOne();
+
+        if (tokenLiked === undefined) {
+          this.likesRepository.save({
+            tokenId,
+            userAddress,
+          });
+
+          resolve(true);
+        }
+
+        await this.likesRepository.delete({
+          tokenId,
+          userAddress,
+        });
+
+        resolve(true);
       } catch (error) {
         reject(error);
       }
