@@ -1,14 +1,16 @@
-import { UserService } from './../services/user.service';
-import { Controller, Post } from '@nestjs/common';
+import { ResponseUtils, Response } from '../../utils';
+import { UserService } from '../services/user.service';
+import { Controller, Post, Get, Param } from '@nestjs/common';
 
 @Controller('users')
 export class UserController {
-    constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-    async singin (): Promise<any> {
-
-    }
-
-    @Post(':userAddress')
-    async follow ()
+  @Get('/:email')
+  private async findOne(@Param('email') email: string): Promise<Response> {
+    return ResponseUtils.getSuccessResponse(
+      await this.userService.findOne(email),
+      'User fetched successfully'
+    );
+  }
 }
