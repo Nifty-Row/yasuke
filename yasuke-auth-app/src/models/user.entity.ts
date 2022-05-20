@@ -27,6 +27,9 @@ export class User {
   @Column({ default: 'fiat-user' })
   type: string;
 
+  @Column({ nullable: false, type: 'varchar', length: 255 })
+  profile: string;
+
   @OneToOne(() => Social, (social) => social.user)
   social: Social;
 }
