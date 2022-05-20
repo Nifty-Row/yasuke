@@ -1,4 +1,4 @@
-import { hashSync } from 'bcryptjs';
+import { compareSync, hashSync } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
 export class ResponseUtils {
@@ -21,6 +21,10 @@ export class Response {
 
 export const hashPassword = (password: string) => {
   return hashSync(password, 10);
+};
+
+export const comparePassword = (password, hashedPassword) => {
+  return compareSync(password, hashedPassword);
 };
 
 const createToken = (payload, duration) => {

@@ -1,5 +1,6 @@
+import { LocalAuthGuard } from './../guards/local-auth.guard';
 import { User } from './../models/user.entity';
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './../services/auth.service';
 import { Response, ResponseUtils } from 'utils';
 
@@ -12,6 +13,15 @@ export class AuthController {
     return ResponseUtils.getSuccessResponse(
       await this.authService.register(user),
       'Your account was created successfully'
+    );
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('login')
+  async login(@Request() req) {
+    return ResponseUtils.getSuccessResponse(
+      await this.authService.login(req.user),
+      'login successful'
     );
   }
 }
