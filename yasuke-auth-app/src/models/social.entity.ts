@@ -7,6 +7,9 @@ export class Social {
   id: number;
 
   @Column()
+  userId: number;
+
+  @Column()
   telegram: string;
 
   @Column()
