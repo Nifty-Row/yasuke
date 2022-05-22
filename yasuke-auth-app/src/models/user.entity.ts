@@ -28,7 +28,7 @@ export class User {
   type: string;
 
   @Column({ nullable: false, type: 'varchar', length: 255 })
-  profile: string;
+  about: string;
 
   @OneToOne(() => Social, (social) => social.user)
   social: Social;

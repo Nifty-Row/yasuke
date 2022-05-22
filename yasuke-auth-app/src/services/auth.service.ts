@@ -22,8 +22,15 @@ export class AuthService {
   async register(userDetails: User): Promise<object> {
     return new Promise(async (resolve, reject) => {
       try {
-        const { firstName, lastName, email, password, walletAddress } =
-          userDetails;
+        const {
+          firstName,
+          lastName,
+          email,
+          password,
+          walletAddress,
+          about,
+          type,
+        } = userDetails;
 
         const user = await this.userRepository.save({
           firstName: firstName.toLocaleLowerCase(),
@@ -31,6 +38,8 @@ export class AuthService {
           email: email.toLocaleLowerCase(),
           password: hashPassword(password),
           walletAddress,
+          about,
+          type,
         });
 
         const payload = {
@@ -41,6 +50,7 @@ export class AuthService {
           walletAddress: user.walletAddress,
           type: user.type,
           isActive: user.isActive,
+          about,
         };
 
         const { accessToken } = await generateFreshUserTokens(payload);
