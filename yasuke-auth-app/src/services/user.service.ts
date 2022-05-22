@@ -1,3 +1,4 @@
+import { UserFollower } from './../models/userFollower.entity';
 import { Social } from './../models/social.entity';
 import { User } from './../models/user.entity';
 import { Injectable } from '@nestjs/common';
@@ -8,6 +9,8 @@ import { Repository } from 'typeorm';
 export class UserService {
   @InjectRepository(User) private userRepository: Repository<User>;
   @InjectRepository(Social) private socialRepository: Repository<Social>;
+  @InjectRepository(UserFollower)
+  private userFollower: Repository<UserFollower>;
 
   async findOne(email: string): Promise<User> {
     return new Promise(async (resolve, reject) => {
@@ -51,6 +54,33 @@ export class UserService {
         }
 
         resolve(social);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  async follow(
+    userAddress: string,
+    followUserAddress: string
+  ): Promise<string> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const userFollowing = await this.userFollower.find({
+          userAddress,
+          followUserAddress,
+        });
+
+        if (userFollowing == null) {
+          reject('You are already following this user');
+        }
+
+        await this.userFollower.save({
+          userAddress,
+          followUserAddress,
+        });
+
+        resolve('You have successfully followed this user');
       } catch (error) {
         reject(error);
       }

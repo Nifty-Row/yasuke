@@ -8,6 +8,7 @@ import {
   UseGuards,
   Request,
   Body,
+  Param,
 } from '@nestjs/common';
 
 @Controller('users')
@@ -40,6 +41,17 @@ export class UserController {
     return ResponseUtils.getSuccessResponse(
       await this.userService.addUserSocials(body),
       'socials added successfully'
+    );
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('follow/:followUserAddress')
+  async follow(
+    @Param('followUserAddress') followUserAddress: string,
+    @Request() req
+  ) {
+    return ResponseUtils.getSuccessResponse(
+      await this.userService.follow(req.user.walletAddress, followUserAddress)
     );
   }
 }

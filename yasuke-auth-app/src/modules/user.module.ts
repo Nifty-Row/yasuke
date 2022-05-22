@@ -1,3 +1,4 @@
+import { UserFollower } from './../models/userFollower.entity';
 import { Social } from './../models/social.entity';
 import { User } from './../models/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -6,7 +7,7 @@ import { UserController } from './../controllers/user.controller';
 import { Module } from '@nestjs/common';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Social])],
+  imports: [TypeOrmModule.forFeature([User, Social, UserFollower])],
   controllers: [UserController],
   providers: [UserService],
   exports: [UserService],
