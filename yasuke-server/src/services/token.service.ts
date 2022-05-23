@@ -26,7 +26,7 @@ export class TokenService {
     private imageService: ImageService,
     private yasukeService: YasukeService,
     private auctionService: AuctionService,
-  ) { }
+  ) {}
 
   @InjectRepository(TokenInfo)
   tokenInfoRepository: Repository<TokenInfo>;
