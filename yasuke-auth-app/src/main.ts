@@ -9,7 +9,11 @@ async function bootstrap() {
   });
 
   app.enableCors();
+<<<<<<< HEAD
   app.setGlobalPrefix('/api');
+=======
+  app.setGlobalPrefix('/yasuke-server');
+>>>>>>> new-yasuke-app
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
   // app.useGlobalFilters(new ExceptionsFilter());
