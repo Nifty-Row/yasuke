@@ -15,6 +15,11 @@ import {
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @Get()
+  async default() {
+    return "Hello World";
+  }
+    
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   private async getProfile(@Request() req): Promise<Response> {
