@@ -101,16 +101,16 @@ export class TokenService {
 
     const qb = await this.tokenInfoRepository
       .createQueryBuilder('tokenInfo')
-      .where('chain = :chain', { chain: chain })
-      .where('hasActiveAuction = :ha', { ha: true })
-      .where('isInAuction = :ia', { ia: true })
-      .where('isApproved = :iap', { iap: true })
+      .where('tokenInfo.chain = :chain', { chain })
+      .andWhere('hasActiveAuction = :ha', { ha: true })
+      .andWhere('isInAuction = :ia', { ia: true })
+      .andWhere('isApproved = :iap', { iap: true })
       .leftJoinAndSelect('tokenInfo.media', 'media')
       .leftJoinAndMapOne(
         'tokenInfo.auctions',
         AuctionInfo,
         'auctions',
-        'auctions.auctionId = tokenInfo.lastAuctionId and auctions.endDate > :now ',
+        'auctions.auctionId = tokenInfo.lastAuctionId and auctions.endDate > :now',
         { now: now },
       )
       .leftJoinAndMapOne(
