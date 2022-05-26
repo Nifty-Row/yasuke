@@ -1,9 +1,12 @@
+import { UserPhoto } from './userPhoto.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   OneToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Social } from './social.entity';
 
@@ -42,7 +45,20 @@ export class User {
   @Column()
   joinDate: Date;
 
+  @Column({ nullable: true })
+  webUrl: string;
+
   @OneToOne(() => Social)
   @JoinColumn()
   social: Social;
+
+  @OneToOne(() => UserPhoto)
+  @JoinColumn()
+  photo: UserPhoto;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }

@@ -1,33 +1,21 @@
 import {
-  Column,
-  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class Social {
+export class UserPhoto {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  telegramUrl: string;
+  displayImage: string;
 
   @Column()
-  facebookUrl: string;
-
-  @Column()
-  twitterUrl: string;
-
-  @Column()
-  youtubeUrl: string;
-
-  @Column()
-  pinterestUrl: string;
-
-  @Column()
-  discordUrl: string;
+  coverImage: string;
 
   @CreateDateColumn()
   created_at: Date;

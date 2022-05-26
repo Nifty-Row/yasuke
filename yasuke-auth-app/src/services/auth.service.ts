@@ -1,3 +1,5 @@
+import { ImageService } from '../services/image.service';
+import { UserPhoto } from './../models/userPhoto.entity';
 import { Social } from './../models/social.entity';
 import { UserService } from './user.service';
 import {
@@ -17,9 +19,12 @@ export class AuthService {
 
   @InjectRepository(Social) socialRepository: Repository<Social>;
 
+  @InjectRepository(UserPhoto) photoRepository: Repository<UserPhoto>;
+
   constructor(
     private readonly userService: UserService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private imageService: ImageService
   ) {}
 
   async register(userDetails: User): Promise<object> {
@@ -35,11 +40,28 @@ export class AuthService {
           about,
           type,
           social,
+          webUrl,
+          photo,
         } = userDetails;
 
         let joinDate = new Date();
 
         const userSocials = await this.socialRepository.save(social);
+
+        const displayImage: string = await this.imageService.uploadAssetImage(
+          photo.displayImage
+        );
+
+        const coverImage: string = await this.imageService.uploadAssetImage(
+          photo.coverImage
+        );
+
+        const photos = {
+          coverImage,
+          displayImage,
+        };
+
+        const userPhoto = await this.photoRepository.save(photos);
 
         const user = await this.userRepository.save({
           firstName: firstName.toLocaleLowerCase(),
@@ -51,7 +73,9 @@ export class AuthService {
           about,
           type,
           joinDate,
+          webUrl,
           social: userSocials,
+          photo: userPhoto,
         });
 
         const payload = {
@@ -65,6 +89,8 @@ export class AuthService {
           isActive: user.isActive,
           about,
           social,
+          webUrl,
+          photos,
         };
 
         const { accessToken } = await generateFreshUserTokens(payload);
