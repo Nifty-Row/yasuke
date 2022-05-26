@@ -1,3 +1,4 @@
+import { Social } from './../models/social.entity';
 import { UserService } from './user.service';
 import {
   hashPassword,
@@ -14,6 +15,8 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
   @InjectRepository(User) userRepository: Repository<User>;
 
+  @InjectRepository(Social) socialRepository: Repository<Social>;
+
   constructor(
     private readonly userService: UserService,
     private jwtService: JwtService
@@ -25,32 +28,43 @@ export class AuthService {
         const {
           firstName,
           lastName,
+          username,
           email,
           password,
           walletAddress,
           about,
           type,
+          social,
         } = userDetails;
+
+        let joinDate = new Date();
+
+        const userSocials = await this.socialRepository.save(social);
 
         const user = await this.userRepository.save({
           firstName: firstName.toLocaleLowerCase(),
           lastName: lastName.toLocaleLowerCase(),
+          username,
           email: email.toLocaleLowerCase(),
           password: hashPassword(password),
           walletAddress,
           about,
           type,
+          joinDate,
+          social: userSocials,
         });
 
         const payload = {
-          sub: user.id,
+          id: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          username: user.username,
           walletAddress: user.walletAddress,
           type: user.type,
           isActive: user.isActive,
           about,
+          social,
         };
 
         const { accessToken } = await generateFreshUserTokens(payload);

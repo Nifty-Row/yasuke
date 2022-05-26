@@ -1,5 +1,4 @@
-import { User } from './user.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Social {
@@ -7,20 +6,20 @@ export class Social {
   id: number;
 
   @Column()
-  userId: number;
+  telegramUrl: string;
 
   @Column()
-  telegram: string;
+  facebookUrl: string;
 
   @Column()
-  facebook: string;
+  twitterUrl: string;
 
   @Column()
-  twitter: string;
+  youtubeUrl: string;
 
   @Column()
-  youtube: string;
+  pinterestUrl: string;
 
-  @OneToOne(() => User, (user) => user.social)
-  user: User;
+  @Column()
+  discordUrl: string;
 }

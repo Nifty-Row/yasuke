@@ -1,3 +1,4 @@
+import { Social } from './../models/social.entity';
 import { JwtStrategy } from './../../configs/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -12,7 +13,7 @@ import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Social]),
     ConfigModule.forRoot(),
     UserModule,
     PassportModule,

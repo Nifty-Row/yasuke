@@ -15,13 +15,17 @@ export class UserService {
   async findOne(email: string): Promise<User> {
     return new Promise(async (resolve, reject) => {
       try {
-        const user = await this.userRepository.findOne({ email });
+        const userProfile = await this.userRepository
+          .createQueryBuilder('user')
+          .where('email = :email', { email })
+          .leftJoinAndSelect('user.social', 'social')
+          .getOne();
 
-        if (!user) {
-          reject(user);
+        if (!userProfile) {
+          reject(userProfile);
         }
 
-        resolve(user);
+        resolve(userProfile);
       } catch (error) {
         reject(error);
       }
@@ -31,7 +35,7 @@ export class UserService {
   async getUserSocials(userId: number): Promise<Social> {
     return new Promise(async (resolve, reject) => {
       try {
-        const socials = await this.socialRepository.findOne({ userId });
+        const socials = await this.socialRepository.findOne();
 
         if (!socials) {
           reject(socials);
