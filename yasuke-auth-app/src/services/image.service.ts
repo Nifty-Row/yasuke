@@ -6,9 +6,9 @@ export class ImageService {
   private readonly logger = new Logger(ImageService.name);
   constructor() {
     v2.config({
-      cloud_name: 'xendbit',
-      api_key: '289875491748246',
-      api_secret: 'tZILi09rvlogXGuTMkP7x0MrhTA',
+      cloud_name: process.env.CLOUD_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
     });
   }
 
@@ -22,7 +22,7 @@ export class ImageService {
 
     const response: UploadApiResponse = await v2.uploader.upload(
       b64Image,
-      options,
+      options
     );
     return response.secure_url;
   }

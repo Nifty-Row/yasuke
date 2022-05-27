@@ -1,3 +1,6 @@
+import { ImageService } from '../services/image.service';
+import { UserPhoto } from './../models/userPhoto.entity';
+import { Social } from './../models/social.entity';
 import { JwtStrategy } from './../../configs/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -12,7 +15,7 @@ import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Social, UserPhoto]),
     ConfigModule.forRoot(),
     UserModule,
     PassportModule,
@@ -22,6 +25,6 @@ import { PassportModule } from '@nestjs/passport';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, ImageService],
 })
 export class AuthModule {}

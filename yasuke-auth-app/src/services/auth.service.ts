@@ -1,3 +1,6 @@
+import { ImageService } from '../services/image.service';
+import { UserPhoto } from './../models/userPhoto.entity';
+import { Social } from './../models/social.entity';
 import { UserService } from './user.service';
 import {
   hashPassword,
@@ -14,9 +17,14 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
   @InjectRepository(User) userRepository: Repository<User>;
 
+  @InjectRepository(Social) socialRepository: Repository<Social>;
+
+  @InjectRepository(UserPhoto) photoRepository: Repository<UserPhoto>;
+
   constructor(
     private readonly userService: UserService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private imageService: ImageService
   ) {}
 
   async register(userDetails: User): Promise<object> {
@@ -25,32 +33,64 @@ export class AuthService {
         const {
           firstName,
           lastName,
+          username,
           email,
           password,
           walletAddress,
           about,
           type,
+          social,
+          webUrl,
+          photo,
         } = userDetails;
+
+        let joinDate = new Date();
+
+        const userSocials = await this.socialRepository.save(social);
+
+        const displayImage: string = await this.imageService.uploadAssetImage(
+          photo.displayImage
+        );
+
+        const coverImage: string = await this.imageService.uploadAssetImage(
+          photo.coverImage
+        );
+
+        const photos = {
+          coverImage,
+          displayImage,
+        };
+
+        const userPhoto = await this.photoRepository.save(photos);
 
         const user = await this.userRepository.save({
           firstName: firstName.toLocaleLowerCase(),
           lastName: lastName.toLocaleLowerCase(),
+          username,
           email: email.toLocaleLowerCase(),
           password: hashPassword(password),
           walletAddress,
           about,
           type,
+          joinDate,
+          webUrl,
+          social: userSocials,
+          photo: userPhoto,
         });
 
         const payload = {
-          sub: user.id,
+          id: user.id,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
+          username: user.username,
           walletAddress: user.walletAddress,
           type: user.type,
           isActive: user.isActive,
           about,
+          social,
+          webUrl,
+          photos,
         };
 
         const { accessToken } = await generateFreshUserTokens(payload);

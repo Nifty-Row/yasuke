@@ -1,10 +1,22 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
+import { UserPhoto } from './userPhoto.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { Social } from './social.entity';
 
-@Entity('user')
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ unique: true })
+  username: string;
 
   @Column()
   firstName: string;
@@ -30,6 +42,23 @@ export class User {
   @Column({ nullable: false, type: 'varchar', length: 255 })
   about: string;
 
-  @OneToOne(() => Social, (social) => social.user)
+  @Column()
+  joinDate: Date;
+
+  @Column({ nullable: true })
+  webUrl: string;
+
+  @OneToOne(() => Social)
+  @JoinColumn()
   social: Social;
+
+  @OneToOne(() => UserPhoto)
+  @JoinColumn()
+  photo: UserPhoto;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
