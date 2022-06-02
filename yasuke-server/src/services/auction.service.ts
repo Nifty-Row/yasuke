@@ -19,7 +19,7 @@ import { YasukeService } from './yasuke.service';
 @Injectable()
 export class AuctionService {
   private readonly logger = new Logger(AuctionService.name);
-  constructor(private yasukeService: YasukeService) { }
+  constructor(private yasukeService: YasukeService) {}
 
   @InjectRepository(AuctionInfo)
   auctionInfoRepository: Repository<AuctionInfo>;
