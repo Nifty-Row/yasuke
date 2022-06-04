@@ -104,7 +104,6 @@ export class TokenService {
       .where('tokenInfo.chain = :chain', { chain })
       .andWhere('hasActiveAuction = :ha', { ha: true })
       .andWhere('isApproved = :iap', { iap: true })
-      .leftJoinAndSelect('tokenInfo.media', 'media')
       .leftJoinAndMapOne(
         'tokenInfo.auctions',
         AuctionInfo,
@@ -118,6 +117,7 @@ export class TokenService {
         'likes',
         'likes.tokenId = tokenInfo.tokenId',
       )
+      .leftJoinAndSelect('tokenInfo.media', 'media')
       .orderBy('tokenInfo.dateIssued', 'DESC');
 
     return paginate<TokenInfo>(qb, options);
