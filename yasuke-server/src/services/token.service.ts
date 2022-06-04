@@ -96,7 +96,7 @@ export class TokenService {
   async listTokensWithAuction(
     options: IPaginationOptions,
     chain: string,
-  ): Promise<TokenInfo[]> {
+  ): Promise<Pagination<TokenInfo>> {
     const now = new Date();
 
     const qb = await this.tokenInfoRepository
@@ -118,10 +118,9 @@ export class TokenService {
         'likes',
         'likes.tokenId = tokenInfo.tokenId',
       )
-      .orderBy('tokenInfo.dateIssued', 'DESC')
-      .getMany();
+      .orderBy('tokenInfo.dateIssued', 'DESC');
 
-    return qb;
+    return paginate<TokenInfo>(qb, options);
   }
 
   async changeTokenOwnership(tokenId: number, chain: string): Promise<boolean> {
