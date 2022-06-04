@@ -103,7 +103,6 @@ export class TokenService {
       .createQueryBuilder('tokenInfo')
       .where('tokenInfo.chain = :chain', { chain })
       .andWhere('hasActiveAuction = :ha', { ha: true })
-      .andWhere('isInAuction = :ia', { ia: true })
       .andWhere('isApproved = :iap', { iap: true })
       .leftJoinAndSelect('tokenInfo.media', 'media')
       .leftJoinAndMapOne(
