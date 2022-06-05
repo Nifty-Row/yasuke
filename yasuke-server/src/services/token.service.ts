@@ -104,20 +104,20 @@ export class TokenService {
       .where('tokenInfo.chain = :chain', { chain })
       .andWhere('hasActiveAuction = :ha', { ha: true })
       .andWhere('isApproved = :iap', { iap: true })
-      .leftJoinAndSelect('tokenInfo.media', 'media')
-      .leftJoinAndMapOne(
+      .leftJoinAndMapMany(
         'tokenInfo.auctions',
         AuctionInfo,
         'auctions',
         'auctions.auctionId = tokenInfo.lastAuctionId and auctions.endDate > :now',
         { now: now },
       )
-      .leftJoinAndMapOne(
+      .leftJoinAndMapMany(
         'tokenInfo.likes',
         Likes,
         'likes',
-        'likes.tokenId = tokenInfo.tokenId',
+        'tokenInfo.tokenId = likes.tokenId',
       )
+      .leftJoinAndSelect('tokenInfo.media', 'media')
       .orderBy('tokenInfo.dateIssued', 'DESC');
 
     return paginate<TokenInfo>(qb, options);
