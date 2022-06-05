@@ -26,7 +26,7 @@ export class TokenService {
     private imageService: ImageService,
     private yasukeService: YasukeService,
     private auctionService: AuctionService,
-  ) {}
+  ) { }
 
   @InjectRepository(TokenInfo)
   tokenInfoRepository: Repository<TokenInfo>;
@@ -118,7 +118,8 @@ export class TokenService {
         'tokenInfo.tokenId = likes.tokenId',
       )
       .leftJoinAndSelect('tokenInfo.media', 'media')
-      .orderBy('tokenInfo.dateIssued', 'DESC');
+      .addOrderBy('tokenInfo.dateIssued', 'DESC')
+      .addOrderBy('media.id', 'ASC');
 
     return paginate<TokenInfo>(qb, options);
   }
