@@ -119,7 +119,8 @@ export class TokenService {
       )
       .leftJoinAndSelect('tokenInfo.media', 'media')
       .addOrderBy('tokenInfo.dateIssued', 'DESC')
-      .addOrderBy('media.id', 'ASC');
+      .addOrderBy('media.id', 'ASC')
+      .addOrderBy('auctions.id', 'DESC');
 
     return paginate<TokenInfo>(qb, options);
   }
