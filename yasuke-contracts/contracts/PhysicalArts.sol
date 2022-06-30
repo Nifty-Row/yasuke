@@ -2,9 +2,9 @@
 pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
-import '../library/models.sol';
-import '../Token.sol';
-import '../interfaces/PhysicalArtsInterface.sol';
+import './library/models.sol';
+import './Token.sol';
+import './interfaces/PhysicalArtsInterface.sol';
 
 contract PhysicalArts is ReentrancyGuard, PhysicalArtsInterface {
     address internal admin = address(0);
