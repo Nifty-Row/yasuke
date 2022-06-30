@@ -1,11 +1,9 @@
 //SPDX-License-Identifier: MIT-0
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 
 import './interfaces/StorageInterface.sol';
 import './library/models.sol';
-import './library/console.sol';
-import './Token.sol';
 
 contract Storage is StorageInterface {
     mapping(uint256 => address) internal owner;
@@ -29,15 +27,18 @@ contract Storage is StorageInterface {
     mapping(uint256 => Token) internal tokens;
 
     address internal admin = address(0);
-
     address internal parent = address(0);
 
-    uint256 internal xendFeesPercentage = 5;
-    uint256 internal issuerFeesPercentage = 10;
+    uint256 internal xendFeesPercentage = 2;
+    uint256 internal issuerFeesPercentage = 5;
     address payable internal xendFeesAddress = payable(0x616B6c01DFeA4AF613326FDF683429f43CEe86FD);
 
     function setXendFeesPercentage(uint256 _percentage) public override {
         require(msg.sender == admin, "You can't do that");
+        // should not increment more than 5% at a time
+        // should not be more than 30%
+        require(_percentage - xendFeesPercentage <= 5);
+        require(_percentage < 30);
         xendFeesPercentage = _percentage;
     }
 
@@ -47,6 +48,8 @@ contract Storage is StorageInterface {
 
     function setIssuerFeesPercentage(uint256 _percentage) public override {
         require(msg.sender == admin, "You can't do that");
+        // should not be more than 30%   
+        require(_percentage <= 30);             
         issuerFeesPercentage = _percentage;
     }
 
@@ -84,6 +87,7 @@ contract Storage is StorageInterface {
 
     function addToken(uint256 tokenId, Token token) public override {
         require(msg.sender == admin, "You can't do that");
+        require(address(tokens[tokenId]) == address(0), "Token with ID already exists");
         tokens[tokenId] = token;
     }
 
@@ -322,11 +326,5 @@ contract Storage is StorageInterface {
 
     function isInSale(uint256 tokenId) public view override returns (bool) {
         return inSale[tokenId];
-    }    
-
-    function echo() public view override returns (bool) {
-        console.log('2. Sender: %s, Admin: %s, Parent: %s', msg.sender, admin, parent);
-        require(msg.sender == admin, "You can't do that");
-        return true;
     }
 }

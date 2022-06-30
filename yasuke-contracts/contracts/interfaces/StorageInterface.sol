@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: MIT-0
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.4;
 pragma experimental ABIEncoderV2;
 import '../library/models.sol';
 import '../Token.sol';
@@ -124,8 +124,6 @@ interface StorageInterface {
     function setXendFeesAddress(address payable xfAddress) external;
 
     function getXendFeesAddress() external view returns (address payable);    
-
-    function echo() external view returns (bool);
 
     function getParent() external view returns (address);
 
