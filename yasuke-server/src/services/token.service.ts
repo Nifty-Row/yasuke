@@ -12,6 +12,7 @@ import {
   TokenInfo,
   AuctionInfo,
   Likes,
+  UserPhoto,
 } from 'src/models/entities.model';
 import { Repository } from 'typeorm';
 import { ImageService } from './image.service';
@@ -26,7 +27,7 @@ export class TokenService {
     private imageService: ImageService,
     private yasukeService: YasukeService,
     private auctionService: AuctionService,
-  ) { }
+  ) {}
 
   @InjectRepository(TokenInfo)
   tokenInfoRepository: Repository<TokenInfo>;
@@ -35,6 +36,8 @@ export class TokenService {
   mediaRepository: Repository<Media>;
 
   @InjectRepository(Likes) likesRepository: Repository<Likes>;
+
+  @InjectRepository(UserPhoto) profilePicRepository: Repository<UserPhoto>;
 
   async getTokenInfo(tokenId: number, chain: string): Promise<TokenInfo> {
     return new Promise(async (resolve, reject) => {
@@ -116,6 +119,18 @@ export class TokenService {
         Likes,
         'likes',
         'tokenInfo.tokenId = likes.tokenId',
+      )
+      .leftJoinAndMapOne(
+        'tokenInfo.issuerPhoto',
+        UserPhoto,
+        'issuerPhoto',
+        'tokenInfo.issuer = issuerPhoto.walletAddress',
+      )
+      .leftJoinAndMapOne(
+        'tokenInfo.ownerPhoto',
+        UserPhoto,
+        'ownerPhoto',
+        'tokenInfo.owner = ownerPhoto.walletAddress',
       )
       .leftJoinAndSelect('tokenInfo.media', 'media')
       .addOrderBy('tokenInfo.dateIssued', 'DESC')
