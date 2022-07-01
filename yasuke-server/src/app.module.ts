@@ -1,11 +1,17 @@
-import { Likes } from './models/entities.model';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { YasukeController } from './controllers/yasuke.controller';
 import { AuthGuard } from './guards/auth.guard';
-import { AuctionInfo, Bid, Media, TokenInfo } from './models/entities.model';
+import {
+  AuctionInfo,
+  Bid,
+  Media,
+  TokenInfo,
+  Likes,
+  UserPhoto,
+} from './models/entities.model';
 import { Issuer } from './models/issuer.model';
 import { ImageService } from './services/image.service';
 import { YasukeService } from './services/yasuke.service';
@@ -28,6 +34,7 @@ import { Buyer } from './models/buyer.model';
       Whitelist,
       Buyer,
       Likes,
+      UserPhoto,
     ]),
   ],
   controllers: [YasukeController, ICOController],
