@@ -19,8 +19,13 @@ describe('YASUKE', function () {
         await store.deployed();
         console.log('Store deployed to:', store.address);
 
+        const PhysicalArts = await ethers.getContractFactory("PhysicalArts");
+        const physicalStore = await PhysicalArts.deploy();
+        await physicalStore.deployed();
+        console.log("Physical Store deployed to:", physicalStore.address);
+
         const Yasuke = await ethers.getContractFactory('Yasuke');
-        yasuke = await Yasuke.deploy(store.address);
+        yasuke = await Yasuke.deploy(store.address, physicalStore.address);
         await yasuke.deployed();
         console.log('YASUKE deployed to:', yasuke.address);
 

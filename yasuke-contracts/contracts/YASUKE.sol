@@ -6,7 +6,6 @@ import '@openzeppelin/contracts/utils/math/SafeMath.sol';
 import '@openzeppelin/contracts/security/ReentrancyGuard.sol';
 import './library/models.sol';
 import './interfaces/StorageInterface.sol';
-import './interfaces/PhysicalArtsInterface.sol';
 import './interfaces/YasukeInterface.sol';
 
 // TODO: Calculate Fees
@@ -15,17 +14,13 @@ contract Yasuke is YasukeInterface, ReentrancyGuard {
     address internal minter;
 
     StorageInterface internal store;
-    PhysicalArtsInterface internal physicalStore;
 
     address internal burnAddress = 0x000000000000000000000000000000000000dEaD;
 
-    constructor(address storeAddress, address physicalStoreAddress) {
+    constructor(address storeAddress) {
         minter = msg.sender;
         store = StorageInterface(storeAddress);
         store.setAdmin(address(this), msg.sender);
-
-        physicalStore = PhysicalArtsInterface(physicalStoreAddress);
-        physicalStore.setAdmin(address(this), msg.sender);
     }
 
     function startAuction(
@@ -62,30 +57,17 @@ contract Yasuke is YasukeInterface, ReentrancyGuard {
         store.startAuction(ai);
     }
 
-    function sellNow(uint256 tokenId, uint256 sellNowPrice) public {
-        physicalStore.sellNow(tokenId, sellNowPrice);
-    }
-
-    function bought(uint256 tokenId) public {
-        physicalStore.bought(tokenId);
-    }
-
     function issueToken(
         uint256 tokenId,
         address payable owner,
         string memory _uri,
         string memory _name,
-        string memory _symbol,
-        bool isPhysicalArt
+        string memory _symbol
     ) public override nonReentrant {
         Token t = new Token(owner, _uri, _name, _symbol);
         require(t.mint(tokenId), 'MF');
-        if(isPhysicalArt) {
-            physicalStore.addToken(tokenId, t);
-        } else {
-            store.addToken(tokenId, t);
-            store.setOwner(tokenId, owner);
-        }
+        store.addToken(tokenId, t);
+        store.setOwner(tokenId, owner);
     }
 
     function endBid(uint256 tokenId, uint256 auctionId) public nonReentrant {

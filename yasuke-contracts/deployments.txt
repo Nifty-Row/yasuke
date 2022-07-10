@@ -1,3 +1,55 @@
+Mon 10 July 2022
+-------------------------------
+
+➜  yasuke-contracts git:(master) ✗ yarn deploy --network tpolygon
+yarn run v1.22.18
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network tpolygon
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0x729F19e4C405758C93F59E5f098190cB2382d883
+Account balance: 615624133273793498
+Deploying store. 
+Store deployed to: 0xDDa4964520e33f7eb8763a9c0998311a748142AA
+YASUKE deployed to: 0xF45C634B7D2193a6d3D38F94f62cB0A9Ba8DdaE0
+✨  Done in 43.84s.
+
+
+
+
+Mon 3 July 2022
+-------------------------------
+
+➜  yasuke-contracts git:(master) ✗ yarn deploy --network avalanche
+yarn run v1.22.18
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network avalanche
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0xE447B45EA6FD4c8B76b25354a503C793826e5294
+Account balance: 2395076300000000000
+Deploying store. 
+Store deployed to: 0xd1268E8d36f8daCb954d9e5b89DC20f73a052777
+YASUKE deployed to: 0x7CB03aC15d3667Fc87efA0ebe7dF19CE6807e613
+
+
+➜  yasuke-contracts git:(master) ✗ yarn deploy --network tbsc     
+yarn run v1.22.18
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network tbsc
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0xE447B45EA6FD4c8B76b25354a503C793826e5294
+Account balance: 6453088372099875194
+Deploying store. 
+Store deployed to: 0x84Ec8F1dc02e59Aa6323e8891D560eC7B5332963
+YASUKE deployed to: 0xe570D9670c8E812756573947aFDe581913cea9A4
+✨  Done in 34.61s.
+
+
+
+
+
 Mon 28 June 2022
 -------------------------------
 ➜  yasuke-contracts git:(master) ✗ yarn deploy --network avalanche

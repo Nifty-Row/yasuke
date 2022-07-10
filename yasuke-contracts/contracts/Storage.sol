@@ -31,7 +31,7 @@ contract Storage is StorageInterface {
 
     uint256 internal xendFeesPercentage = 2;
     uint256 internal issuerFeesPercentage = 5;
-    address payable internal xendFeesAddress = payable(0x616B6c01DFeA4AF613326FDF683429f43CEe86FD);
+    address payable internal xendFeesAddress = payable(0x79B5940d7F7128d6f4cAB24F414E9053fF84D476);
 
     function setXendFeesPercentage(uint256 _percentage) public override {
         require(msg.sender == admin, "You can't do that");
