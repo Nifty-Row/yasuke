@@ -1,6 +1,19 @@
 Mon 10 July 2022
 -------------------------------
 
+➜  yasuke-contracts git:(master) ✗ yarn deploy --network bsc
+yarn run v1.22.18
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network bsc
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0xac706cE8A9BF27Afecf080fB298d0ee13cfb978A
+Account balance: 315142336091297047
+Deploying store. 
+Store deployed to: 0x105258f2CA2DD83c2d945083d213F5A2D99db80f
+YASUKE deployed to: 0xc1C4CFa1983bddf2615aa2F1D93F8Db0714aEaFb
+✨  Done in 36.53s.
+
 ➜  yasuke-contracts git:(master) ✗ yarn deploy --network polygon
 yarn run v1.22.18
 warning package.json: No license field
