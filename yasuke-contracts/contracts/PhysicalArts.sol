@@ -44,5 +44,5 @@ contract PhysicalArts is ReentrancyGuard, PhysicalArtsInterface {
         require(msg.sender == admin, "You can't do that");
         onSale[tokenId] = false;
         salePrice[tokenId] = 0;        
-    }
+    }    
 }

@@ -1,0 +1,41 @@
+Mon 10 July 2022
+-------------------------------
+
+➜  yasuke-contracts git:(master) ✗ yarn deploy --network bsc
+yarn run v1.22.18
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network bsc
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0xac706cE8A9BF27Afecf080fB298d0ee13cfb978A
+Account balance: 315142336091297047
+Deploying store. 
+Store deployed to: 0x105258f2CA2DD83c2d945083d213F5A2D99db80f
+YASUKE deployed to: 0xc1C4CFa1983bddf2615aa2F1D93F8Db0714aEaFb
+✨  Done in 36.53s.
+
+➜  yasuke-contracts git:(master) ✗ yarn deploy --network polygon
+yarn run v1.22.18
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network polygon
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0xac706cE8A9BF27Afecf080fB298d0ee13cfb978A
+Account balance: 13699469999999580000
+Deploying store. 
+Store deployed to: 0x394174ECb1c4137efe7ED353E6354add7a5D0fdF
+YASUKE deployed to: 0x071c45daf813BF12F639FfA63ddf4d0d96C2f892
+✨  Done in 30.11s.
+
+➜  yasuke-contracts git:(master) ✗ yarn deploy --network harmony
+yarn run v1.22.18
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network harmony
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0xac706cE8A9BF27Afecf080fB298d0ee13cfb978A
+Account balance: 11473689454000000000
+Deploying store. 
+Store deployed to: 0xb2523d125494f9f7a55B31A93692e0c3d6bCBbf8
+YASUKE deployed to: 0xb2523d125494f9f7a55B31A93692e0c3d6bCBbf8
+✨  Done in 34.35s.
