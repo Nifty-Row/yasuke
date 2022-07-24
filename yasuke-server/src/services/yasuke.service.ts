@@ -44,11 +44,11 @@ export class YasukeService {
     this.yasukeAddress = this.configService.get<string>(contractAddressKey);
     this.provider = new ethers.providers.JsonRpcProvider(this.web3Provider);
 
-    console.log("web3Key: ", web3Key);
-    console.log("contractAddressKey: ", contractAddressKey);
+    console.log('web3Key: ', web3Key);
+    console.log('contractAddressKey: ', contractAddressKey);
 
-    console.log("web3Provider: ", this.web3Provider);
-    console.log("yasukeAddress: ", this.yasukeAddress);
+    console.log('web3Provider: ', this.web3Provider);
+    console.log('yasukeAddress: ', this.yasukeAddress);
 
     this.yasukeContract = new ethers.Contract(
       this.yasukeAddress,
@@ -203,7 +203,11 @@ export class YasukeService {
     });
   }
 
-  async getTokenInfo(tokenId: number, chain: string): Promise<TokenInfo> {
+  async getTokenInfo(
+    tokenId: number,
+    chain: string,
+    runs = 0,
+  ): Promise<TokenInfo> {
     await this.connectWeb3(chain);
     return new Promise(async (resolve, reject) => {
       try {
@@ -236,7 +240,13 @@ export class YasukeService {
         resolve(tokenInfo);
       } catch (error) {
         if (error.reason === 'TINF') {
-          reject(`Token with id ${tokenId} not found`);
+          if (runs < 3) {
+            setTimeout(() => {
+              this.getTokenInfo(tokenId, chain, runs + 1);
+            }, 5000);
+          } else {
+            reject(`Token with id ${tokenId} not found`);
+          }
         } else {
           reject(error);
         }

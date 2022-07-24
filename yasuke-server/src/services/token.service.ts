@@ -76,6 +76,10 @@ export class TokenService {
         blockchainToken.category = dbToken.category;
         blockchainToken.price = dbToken.price;
         blockchainToken.isApproved = dbToken.isApproved;
+
+        const toSave = { ...dbToken, ...blockchainToken };
+        console.log(toSave);
+
         resolve(blockchainToken);
       } catch (error) {
         reject(error);
