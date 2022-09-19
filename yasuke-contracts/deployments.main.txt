@@ -1,3 +1,121 @@
+Monday 19 September
+------------------------------
+PS C:\Users\bolaj\OneDrive\Documents\GitHub\yasuke\yasuke-contracts> yarn deploy --network bsc
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network bsc
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · y
+Compiled 1 Solidity file successfully
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 56773350000000000
+Deploying store.
+Store deployed to: 0x7B1398697824570027252226e141a3a4e6DE5FfF
+YASUKE deployed to: 0x2Ed286BBbf8b3bC1BC4a0AB05c44eaa349CcF66b
+-----------------------same day
+PS C:\Users\bolaj\OneDrive\Documents\GitHub\yasuke\yasuke-contracts> yarn deploy --network harmony
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network harmony
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · y
+Compiled 1 Solidity file successfully
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 286557141271000000000
+Deploying store.
+Store deployed to: 0x39AC133466A86b90FB4741Ed2FbdCD05f5944d5C
+YASUKE deployed to: 0x424222E9Fd31D01Ae8619A1A3A468C2D2BFd4cCd
+
+Monday 12 September 2022
+-------------------------------
+PS C:\Users\bolaj\OneDrive\Documents\github\yasuke\yasuke-contracts> yarn deploy --network aurora
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network aurora
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · y
+Compiled 1 Solidity file successfully
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 7746428240000000
+Deploying store.
+Store deployed to: 0xe761c6a1643Ed2AeCB38C5192eB2b4755A2d73F3
+YASUKE deployed to: 0xDAbc0b39b43d0ad4Fe55DC4aDaEE5aa911486d35
+Done in 67.53s.
+- - - - - - - - - -same day
+PS C:\Users\bolaj\OneDrive\Documents\github\yasuke\yasuke-contracts> yarn deploy --network polygon
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network polygon
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · y
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 7656170129614595843
+Deploying store.
+Store deployed to: 0x07eCB4C3D2991e18d8452A4f28738d9e99ead440
+YASUKE deployed to: 0xc88FF14102642AC1E835a0387AeC297d333Ca40F
+Done in 41.89s.
+
+
+Thursday 2 September 2022
+-------------------------------
+Polygon:
+yarn deploy --network polygon
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network polygon
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · true
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 400285781697456117
+Deploying store.
+Store deployed to: 0x725006aA0e008494070bEc08FC8D3173b8f2c3aE
+YASUKE deployed to: 0x5B7F29149208877f673a16808C881F466b52827d
+Done in 80.19s.
+Aurora:
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network aurora
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · true
+Compiling 20 files with 0.8.4
+Compilation finished successfully
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 9038296650000000
+Deploying store.
+Store deployed to: 0x1d1C5397dBFB1401520f4D326DEf22F7EeE62422
+YASUKE deployed to: 0x10fCD9891b5bFF78a80d337fc6552dd990fE64e8
+Done in 128.28s.
+
+Thursday 29 August 2022
+-------------------------------
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network aurora
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · true
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 19172100410000000
+Deploying store.
+Store deployed to: 0x7B1398697824570027252226e141a3a4e6DE5FfF
+YASUKE deployed to: 0x2Ed286BBbf8b3bC1BC4a0AB05c44eaa349CcF66b
+Done in 54.92s.
+
+Thursday 25 August 2022
+-------------------------------
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network aurora
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · true
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 28665338510000000
+Deploying store.
+Store deployed to: 0x20CA8D22E696323cBcEd5C2085960a8F7F3A0D36
+YASUKE deployed to: 0x5Fa214375ebB17782A4458842bD6478a363D7A74
+;) Done in 85.45s.
+
 Mon 10 July 2022
 -------------------------------
 

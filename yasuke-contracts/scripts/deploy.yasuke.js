@@ -1,7 +1,7 @@
 const { ethers } = require('hardhat')
 
 async function main() {
-    const storeAddress = '0x17D49b37d9391BD3734f75b57F38778fC8a3BbCd'
+    const storeAddress = '0x17D49b37d9391BD3734f75b57F38778fC8a3BbCd'//try updating this
 
     const signers = await ethers.getSigners()
     const deployer = signers[0]
