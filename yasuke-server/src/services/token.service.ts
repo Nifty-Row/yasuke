@@ -51,6 +51,18 @@ export class TokenService {
           .createQueryBuilder('tokenInfo')
           .where('tokenId = :tid', { tid: tokenId })
           .andWhere('chain = :chain', { chain: chain })
+          .leftJoinAndMapOne(
+            'tokenInfo.issuerPhoto',
+            UserPhoto,
+            'issuerPhoto',
+            'tokenInfo.issuer = issuerPhoto.walletAddress',
+          )
+          .leftJoinAndMapOne(
+            'tokenInfo.ownerPhoto',
+            UserPhoto,
+            'ownerPhoto',
+            'tokenInfo.owner = ownerPhoto.walletAddress',
+          )
           .leftJoinAndSelect('tokenInfo.media', 'media')
           .getOne();
 
@@ -115,9 +127,9 @@ export class TokenService {
         'tokenInfo.auctions',
         AuctionInfo,
         'auctions',
-        'auctions.auctionId = tokenInfo.lastAuctionId and auctions.endDate > :now',
-        { now: now },
+        'auctions.auctionId = tokenInfo.lastAuctionId',
       )
+      .andWhere('auctions.endDate > :now', { now })
       .leftJoinAndMapMany(
         'tokenInfo.likes',
         Likes,
