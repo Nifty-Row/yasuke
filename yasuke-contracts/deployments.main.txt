@@ -1,3 +1,62 @@
+Saturday 24 September 2022
+--------------------------
+PS C:\Users\bolaj\OneDrive\Documents\GitHub\yasuke\yasuke-contracts> yarn deploy --network harmony
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network harmony
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · y
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 240125842271000000000
+Deploying store.
+Store deployed to: 0x72D477a2d1F8703367AB7d65BdEBb675E8FF80eB
+YASUKE deployed to: 0x5c6e0cE0d9363D9F9aC9CBe825F56C3682184eeB
+parent updated
+Storage.Parent is: 0x5c6e0cE0d9363D9F9aC9CBe825F56C3682184eeB
+Done in 91.89s.
+
+Thursday 22 September 2022
+----------------------------
+
+PS C:\Users\bolaj\OneDrive\Documents\GitHub\yasuke\yasuke-contracts> yarn deploy --network harmony
+yarn run v1.22.19
+warning package.json: No license field
+$ npx hardhat run scripts/deploy.js --network harmony
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · y
+Compiled 1 Solidity file successfully
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 277392124271000000000
+Deploying store.
+Store deployed to: 0x98B3656B9CAdd3121F17F1D1D468abA817c206D6
+YASUKE deployed to: 0xc87Ae2c9ab7c1A9140C1cC6078E05E5797114EC1
+Done in 43.17s.
+
+-----------------2nd deployement, same day
+$ npx hardhat run scripts/deploy.js --network aurora
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · y
+Compiled 1 Solidity file successfully
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 7210292150000000
+Deploying store.
+Store deployed to: 0xDF6FF39459eE846620F11Cc62e33088C55da665a
+YASUKE deployed
+
+
+Wednesday 21 September 2022
+----------------------------
+$ npx hardhat run scripts/deploy.js --network polygon
+npm WARN config global `--global`, `--local` are deprecated. Use `--location=global` instead.
+× Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · y
+Compiled 2 Solidity files successfully
+Deploying contracts with the account: 0x0d75B10629808A3c8A70e11c932a9116696E2D80
+Account balance: 630127582497062696
+Deploying store.
+Store deployed to: 0xDAbc0b39b43d0ad4Fe55DC4aDaEE5aa911486d35
+YASUKE deployed to: 0xC26A71E42fBFFe46e5450a2e4C5FFE5067f69b9b
+Done in 47.14s.
+
 Monday 19 September
 ------------------------------
 PS C:\Users\bolaj\OneDrive\Documents\GitHub\yasuke\yasuke-contracts> yarn deploy --network bsc

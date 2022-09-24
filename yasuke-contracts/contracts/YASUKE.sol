@@ -20,7 +20,7 @@ contract Yasuke is YasukeInterface, ReentrancyGuard {
     constructor(address storeAddress) {
         minter = msg.sender;
         store = StorageInterface(storeAddress);
-        store.setAdmin(address(this), msg.sender);
+        //store.setAdmin( msg.sender, address(this));
     }
 
     function startAuction(
@@ -71,7 +71,7 @@ contract Yasuke is YasukeInterface, ReentrancyGuard {
     }
 
     function endBid(uint256 tokenId, uint256 auctionId) public nonReentrant {
-        require(msg.sender == minter, 'no access');
+        require(msg.sender == minter, 'no access allowed!');
         shouldBeStarted(tokenId, auctionId);
         store.setEndBlock(tokenId, auctionId, block.number); // forces the auction to end
     }

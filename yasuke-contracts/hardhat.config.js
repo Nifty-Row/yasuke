@@ -43,6 +43,7 @@ require ('@nomiclabs/hardhat-waffle');
       alphaSort: true,
       runOnCompile: true,
       disambiguatePaths: false,
+      allowUnlimitedContractSize: true,
     }
   },
   networks: {
@@ -67,13 +68,13 @@ require ('@nomiclabs/hardhat-waffle');
       url: "https://data-seed-prebsc-1-s3.binance.org:8545/",
       accounts: ["498ea38b2b6408be76d6c45b2939c2f195a16ac4bca7e62772fc549c7a798176"],
     },    
-    bsc: {
-      url: "https://bsc-dataseed.binance.org/",
-      accounts: [""],
-    },
+    // bsc: {
+    //   url: "https://bsc-dataseed.binance.org/",
+    //   accounts: [""],
+    // },
     // tpolygon: {
     //   url: "https://matic-testnet-archive-rpc.bwarelabs.com",
-    //   accounts: [""]
+    //   accounts: ["07146d1aeb7a014a58ef3f5b04bd0c8edbc97e14d7a5db423e741a22fd3d6ec1"]
     // },
     // polygon: {
     //   url: "https://polygon-rpc.com",

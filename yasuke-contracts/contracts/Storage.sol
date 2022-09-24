@@ -31,7 +31,13 @@ contract Storage is StorageInterface {
 
     uint256 internal xendFeesPercentage = 2;
     uint256 internal issuerFeesPercentage = 5;
-    address payable internal xendFeesAddress = payable(0x378cc82874A60CdfA31D89501C7A2cDA3Ba7abDB);
+    address payable internal xendFeesAddress = payable(0x1B86038fE94b8DCBE3fC9888DCFF7De3C8AeF71c);
+
+        constructor() {
+        admin = msg.sender;
+
+    }
+
 
     function setXendFeesPercentage(uint256 _percentage) public override {
         require(msg.sender == admin, "You can't do that");
@@ -47,7 +53,8 @@ contract Storage is StorageInterface {
     }
 
     function setIssuerFeesPercentage(uint256 _percentage) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         // should not be more than 30%   
         require(_percentage <= 30);             
         issuerFeesPercentage = _percentage;
@@ -58,7 +65,7 @@ contract Storage is StorageInterface {
     }
 
     function setXendFeesAddress(address payable _feesAddress) public override {
-        require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         xendFeesAddress = _feesAddress;
     }
 
@@ -74,20 +81,34 @@ contract Storage is StorageInterface {
         return admin;
     }
 
-    function setAdmin(address _admin, address _parent) public override {
-        // require(msg.sender == admin, "You can't do that");
-        if (admin == address(0) && parent == address(0)) {
-            parent = _parent;
-            admin = _admin;
-        } else if (parent == _parent) {
-            admin = _admin;
-        } else {
-            revert('OACDT');
-        }
+    function setAdmin(address _admin) public override {
+        require(msg.sender == admin, "You can't do that");
+        admin = _admin;
     }
 
+    function setParent(address _parent) public override {
+        require(msg.sender == admin, 'Can not set parent');
+        parent = _parent;
+    }
+
+    // function setAdmin(address _admin, address _parent) public override {
+    //     require(msg.sender == admin, "You can't do that aba");
+    //   //  if (admin == address(0) && parent == address(0)) {
+    //     if (admin == msg.sender && parent == address(0)) {
+    //         parent = _parent;
+    //         admin = _admin;
+    //     } 
+        
+    //     if (parent == _parent) {
+    //         admin = _admin;
+    //     } else {
+    //         revert('OACDT');
+    //     }
+    // }
+
     function addToken(uint256 tokenId, Token token) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         require(address(tokens[tokenId]) == address(0), "Token with ID already exists");
         tokens[tokenId] = token;
     }
@@ -97,7 +118,8 @@ contract Storage is StorageInterface {
     }
 
     function startAuction(Models.AuctionInfo memory ai) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         uint256 tokenId = ai.tokenId;
         uint256 auctionId = ai.auctionId;
         owner[tokenId] = ai.owner;
@@ -116,7 +138,8 @@ contract Storage is StorageInterface {
     }
 
     function startSale(uint256 tokenId, uint256 price, bool withToken) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         noBiddingPrice[tokenId] = price;
         inAuction[tokenId] = false;
         inSale[tokenId] = true;
@@ -132,7 +155,8 @@ contract Storage is StorageInterface {
     }
 
     function setBuyWithToken(uint256 tokenId, bool bwt) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         buyWithToken[tokenId] = bwt;
     }    
 
@@ -177,7 +201,8 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         uint256 hb
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         highestBid[tokenId][auctionId] = hb;
     }
 
@@ -186,7 +211,8 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         address bidder
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         highestBidder[tokenId][auctionId] = bidder;
     }
 
@@ -199,7 +225,8 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         uint256 _endBlock
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         endBlock[tokenId][auctionId] = _endBlock;
     }
 
@@ -220,7 +247,8 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         address bidder
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         bidders[tokenId][auctionId].push(bidder);
     }
 
@@ -233,7 +261,8 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         uint256 bid
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         bids[tokenId][auctionId].push(bid);
     }
 
@@ -246,7 +275,8 @@ contract Storage is StorageInterface {
     }
 
     function setOwner(uint256 tokenId, address _owner) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         owner[tokenId] = _owner;
     }
 
@@ -259,7 +289,8 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         bool _cancelled
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         cancelled[tokenId][auctionId] = _cancelled;
         inAuction[tokenId] = false;
     }
@@ -281,7 +312,8 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         bool _started
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         started[tokenId][auctionId] = _started;
         inAuction[tokenId] = _started;
     }
@@ -291,7 +323,8 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         bool _sellNowTriggered
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         sellNowTriggered[tokenId][auctionId] = _sellNowTriggered;
         inAuction[tokenId] = _sellNowTriggered;
     }    
@@ -301,23 +334,27 @@ contract Storage is StorageInterface {
         uint256 auctionId,
         bool _finished
     ) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         finished[tokenId][auctionId] = _finished;
         inAuction[tokenId] = _finished;
     }    
 
     function setInAuction(uint256 tokenId, bool _inAuction) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         inAuction[tokenId] = _inAuction;
     }
 
     function setInSale(uint256 tokenId, bool _inSale) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         inSale[tokenId] = _inSale;
     }  
 
     function setNoBiddingPrice(uint256 tokenId, uint256 nbp) public override {
-        require(msg.sender == admin, "You can't do that");
+        //require(msg.sender == admin, "You can't do that");
+        require(msg.sender == parent, "You can't do that");
         noBiddingPrice[tokenId] = nbp;
     }
 

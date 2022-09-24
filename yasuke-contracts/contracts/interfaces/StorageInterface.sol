@@ -5,7 +5,10 @@ import '../library/models.sol';
 import '../Token.sol';
 
 interface StorageInterface {
-    function setAdmin(address _admin, address parent) external;
+    function setAdmin(address _admin) external;
+
+    function setParent(address _parent) external;
+    // function setAdmin(address _admin, address parent) external;
 
     function startAuction(Models.AuctionInfo memory ai) external;
 
