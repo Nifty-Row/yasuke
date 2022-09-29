@@ -74,7 +74,7 @@ require ('@nomiclabs/hardhat-waffle');
     // },
     // tpolygon: {
     //   url: "https://matic-testnet-archive-rpc.bwarelabs.com",
-    //   accounts: ["07146d1aeb7a014a58ef3f5b04bd0c8edbc97e14d7a5db423e741a22fd3d6ec1"]
+    //   accounts: [""]
     // },
     // polygon: {
     //   url: "https://polygon-rpc.com",
