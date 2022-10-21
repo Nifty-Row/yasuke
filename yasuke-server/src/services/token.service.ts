@@ -52,6 +52,7 @@ export class TokenService {
           .where('tokenId = :tid', { tid: tokenId })
           .andWhere('chain = :chain', { chain: chain })
           .leftJoinAndSelect('tokenInfo.media', 'media')
+          .addOrderBy('media.id', 'ASC')
           .getOne();
 
         if (dbToken === undefined) {
