@@ -66,16 +66,16 @@ require ('@nomiclabs/hardhat-waffle');
     //     
     tbsc: {
       url: "https://data-seed-prebsc-1-s3.binance.org:8545/",
-      accounts: ["498ea38b2b6408be76d6c45b2939c2f195a16ac4bca7e62772fc549c7a798176"],
+      accounts: [""],
     },    
     // bsc: {
     //   url: "https://bsc-dataseed.binance.org/",
     //   accounts: [""],
     // },
-    // tpolygon: {
-    //   url: "https://matic-testnet-archive-rpc.bwarelabs.com",
-    //   accounts: [""]
-    // },
+    tpolygon: {
+      url: "https://matic-testnet-archive-rpc.bwarelabs.com",
+      accounts: [""]
+    },
     // polygon: {
     //   url: "https://polygon-rpc.com",
     //   accounts: [""]
